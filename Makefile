@@ -10,9 +10,10 @@ default:
 .PHONY: server
 server: dep ## Compile server for local OS
 	go build -i -v -o $(server_out) $(server_in)
-		.
+
 .PHONY: up
-up: default ## Starts menu-send-api
+up: ## Starts go-example-api
+	-docker network create example-go-network
 	docker-compose up
 
 .PHONY: down

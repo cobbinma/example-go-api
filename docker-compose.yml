@@ -8,3 +8,30 @@ services:
       - "8989:8989"
     volumes:
       - .:/go/src
+    environment:
+      - DB_HOST=db
+      - DB_PASSWORD=example
+      - DB_DBNAME=example
+      - DB_USER=example
+    depends_on:
+      - db
+    networks:
+      - example-go-network
+  db:
+    image: "postgres"
+    container_name: "example-go_db"
+    environment:
+      - POSTGRES_PASSWORD=example
+      - POSTGRES_DB=example
+      - POSTGRES_USER=example
+    ports:
+      - "5432:5432"
+    volumes:
+      - example-go_data:/var/lib/postgresql/data
+    networks:
+      - example-go-network
+volumes:
+  example-go_data:
+networks:
+  example-go-network:
+    external: true
