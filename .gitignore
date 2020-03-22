@@ -1,0 +1,7 @@
+menu-send-api/target/*
+karate-*.jar
+vendor
+main
+playground
+bin
+.idea

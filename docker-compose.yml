@@ -1,0 +1,10 @@
+version: '3'
+services:
+  example-go-api:
+    build:
+      context: ""
+      dockerfile: Dockerfile.dev
+    ports:
+      - "8989:8989"
+    volumes:
+      - .:/go/src
