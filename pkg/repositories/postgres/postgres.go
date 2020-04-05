@@ -14,7 +14,7 @@ func NewPostgres(client DBClient) *postgres {
 	return &postgres{dbClient: client}
 }
 
-func (p *postgres) CreatePet(ctx context.Context, pet models.Pet) models.PetError {
+func (p *postgres) CreatePet(ctx context.Context, pet *models.Pet) models.PetError {
 	sql, args, err := sq.StatementBuilder.PlaceholderFormat(sq.Dollar).
 		Insert("pets").Columns("id", "name", "tag").
 		Values(pet.ID, pet.Name, pet.Tag).ToSql()
