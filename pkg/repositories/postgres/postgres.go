@@ -15,11 +15,11 @@ func NewPostgres(client DBClient) *postgres {
 }
 
 func (p *postgres) CreatePet(ctx context.Context, pet *models.Pet) models.PetError {
-	sql, args, err := sq.StatementBuilder.PlaceholderFormat(sq.Dollar).
+	sql, args, _ := sq.StatementBuilder.PlaceholderFormat(sq.Dollar).
 		Insert("pets").Columns("id", "name", "tag").
 		Values(pet.ID, pet.Name, pet.Tag).ToSql()
 
-	_, err = p.dbClient.Exec(sql, args...)
+	_, err := p.dbClient.Exec(sql, args...)
 	if err != nil {
 		pErr := newPetError(err, "could not store pet", 0)
 		pErr.Wrap("could not store pet in database")
@@ -27,4 +27,19 @@ func (p *postgres) CreatePet(ctx context.Context, pet *models.Pet) models.PetErr
 	}
 
 	return nil
+}
+
+func (p *postgres) GetPets(ctx context.Context, limit int, page int) ([]*models.Pet, models.PetError) {
+	sql, args, _ := sq.StatementBuilder.PlaceholderFormat(sq.Dollar).
+		Select("id", "name", "tag").From("pets").
+		Limit(uint64(limit)).Offset(uint64((page) * (limit))).ToSql()
+
+	dbPets, err := p.dbClient.GetPets(sql, args...)
+	if err != nil {
+		pErr := newPetError(err, "could get pets", 0)
+		pErr.Wrap("could not get pets from database")
+		return nil, pErr
+	}
+
+	return dbPets.toPets(), nil
 }

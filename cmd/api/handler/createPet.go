@@ -34,5 +34,4 @@ func (h *handler) CreatePet(c echo.Context) error {
 	}
 
 	return c.NoContent(http.StatusCreated)
-
 }
