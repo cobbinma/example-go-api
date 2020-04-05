@@ -1,6 +1,7 @@
 package postgres
 
 import (
+	"database/sql"
 	"fmt"
 	"github.com/cobbinma/example-go-api/pkg/config"
 	"github.com/jmoiron/sqlx"
@@ -8,6 +9,8 @@ import (
 )
 
 type DBClient interface {
+	Ping() error
+	DB() *sql.DB
 }
 
 type dbClient struct {
@@ -32,4 +35,12 @@ func NewDBClient() DBClient {
 	db.SetMaxIdleConns(5)
 
 	return &dbClient{db: db}
+}
+
+func (dbc *dbClient) Ping() error {
+	return dbc.db.Ping()
+}
+
+func (dbc *dbClient) DB() *sql.DB {
+	return dbc.db.DB
 }
