@@ -6,4 +6,5 @@ import "context"
 type Repository interface {
 	CreatePet(ctx context.Context, pet *Pet) PetError
 	GetPets(ctx context.Context, limit int, page int) ([]*Pet, PetError)
+	GetPet(ctx context.Context, id int) (*Pet, PetError)
 }

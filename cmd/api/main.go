@@ -36,6 +36,7 @@ func getRouter(repository models.Repository) *echo.Echo {
 	e.GET("/oas", h.Oas)
 	e.POST("/pets", h.CreatePet)
 	e.GET("/pets", h.GetPets)
+	e.GET("/pet/:id", h.GetPet)
 
 	return e
 }

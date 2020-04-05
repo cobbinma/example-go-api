@@ -7,7 +7,7 @@ type PetError interface {
 	GetMessage() string
 	GetCode() int
 	Wrap(s string)
-	UnWrap() error
+	Unwrap() error
 }
 
 type petError struct {
@@ -32,7 +32,7 @@ func (pe *petError) Wrap(s string) {
 	pe.err = fmt.Errorf("%s : %w", s, pe.err)
 }
 
-func (pe *petError) UnWrap() error {
+func (pe *petError) Unwrap() error {
 	return pe.err
 }
 
