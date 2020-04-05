@@ -5,41 +5,31 @@ import (
 	"errors"
 )
 
-type Pet interface {
-	GetID() int
-	GetName() string
-	GetTag() string
-}
-
-type pet struct {
+type Pet struct {
 	ID   int    `json:"id"`
 	Name string `json:"name"`
 	Tag  string `json:"tag,omitempty"`
 }
 
-func NewPet(req []byte) (Pet, PetError) {
-	pet := pet{}
+func NewPet(id int, name string, tag string) *Pet {
+	return &Pet{
+		ID:   id,
+		Name: name,
+		Tag:  tag,
+	}
+}
+
+func NewPetFromRequest(req []byte) (*Pet, PetError) {
+	pet := Pet{}
 	if err := json.Unmarshal(req, &pet); err != nil {
 		pe := newPetError(err, "request is not valid", 0)
-		pe.Wrap("could not unmarshal request into pet")
+		pe.Wrap("could not unmarshal request into Pet")
 		return nil, pe
 	}
 	return &pet, nil
 }
 
-func (p *pet) GetID() int {
-	return p.ID
-}
-
-func (p *pet) GetName() string {
-	return p.Name
-}
-
-func (p *pet) GetTag() string {
-	return p.Tag
-}
-
-func (p *pet) validate() PetError {
+func (p *Pet) validate() PetError {
 	if err := p.isIDValid(); err != nil {
 		pe := newPetError(err, "ID is not valid", 0)
 		pe.Wrap("could not validate ID")
@@ -53,14 +43,14 @@ func (p *pet) validate() PetError {
 	return nil
 }
 
-func (p *pet) isIDValid() error {
+func (p *Pet) isIDValid() error {
 	if p.ID < 1 {
 		return errors.New("ID must be greater than 0")
 	}
 	return nil
 }
 
-func (p *pet) isNameValid() error {
+func (p *Pet) isNameValid() error {
 	if p.Name == "" {
 		return errors.New("name must not be empty")
 	}

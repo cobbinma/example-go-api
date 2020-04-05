@@ -1,19 +1,13 @@
 package postgres
 
-type pet struct {
+import "github.com/cobbinma/example-go-api/pkg/models"
+
+type dbPet struct {
 	ID   int    `db:"id"`
 	Name string `db:"name"`
-	Tag  string `db:"tag,omitempty"`
+	Tag  string `db:"tag"`
 }
 
-func (p *pet) GetID() int {
-	return p.ID
-}
-
-func (p *pet) GetName() string {
-	return p.Name
-}
-
-func (p *pet) GetTag() string {
-	return p.Tag
+func (dbp *dbPet) toPet() *models.Pet {
+	return models.NewPet(dbp.ID, dbp.Name, dbp.Tag)
 }
