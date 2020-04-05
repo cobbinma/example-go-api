@@ -2,6 +2,7 @@ package handler_test
 
 import (
 	"context"
+	"errors"
 	"github.com/cobbinma/example-go-api/cmd/api/handler"
 	"github.com/cobbinma/example-go-api/pkg/models"
 	mockModels "github.com/cobbinma/example-go-api/pkg/models/mock"
@@ -55,6 +56,22 @@ var _ = Describe("CreatePet", func() {
 
 			err := h.GetPets(c)
 			Expect(rec.Body.String()).To(Equal(expected))
+			Expect(err).To(BeNil())
+		})
+	})
+	Context("when get pets returns error", func() {
+		BeforeEach(func() {
+			repository.EXPECT().GetPets(ctx, 100, 0).Return(nil, models.NewPetError(errors.New("test error"), "test error", 0))
+		})
+		It("should return a 500 internal server error status", func() {
+			req := httptest.NewRequest(http.MethodPost, "/", nil)
+			rec := httptest.NewRecorder()
+
+			c := e.NewContext(req, rec)
+			h := handler.NewHandler(repository)
+
+			err := h.GetPets(c)
+			Expect(rec.Code).To(Equal(http.StatusInternalServerError))
 			Expect(err).To(BeNil())
 		})
 	})
