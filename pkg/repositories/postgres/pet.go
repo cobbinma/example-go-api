@@ -1,19 +1,19 @@
 package postgres
 
 type pet struct {
-	Identifier int    `db:"identifier"`
-	Name       string `db:"name"`
-	Animal     string `db:"animal"`
+	ID   int    `db:"id"`
+	Name string `db:"name"`
+	Tag  string `db:"animal"`
 }
 
 func (p *pet) GetID() int {
-	return p.Identifier
+	return p.ID
 }
 
 func (p *pet) GetName() string {
 	return p.Name
 }
 
-func (p *pet) GetAnimal() string {
-	return p.Animal
+func (p *pet) GetTag() string {
+	return p.Tag
 }

@@ -4,6 +4,7 @@ import "fmt"
 
 type postgresError struct {
 	err     error
+	code    int
 	message string
 }
 
@@ -21,4 +22,8 @@ func (pe *postgresError) UnWrap() error {
 
 func (pe *postgresError) GetMessage() string {
 	return pe.message
+}
+
+func (pe *postgresError) GetCode() int {
+	return pe.code
 }

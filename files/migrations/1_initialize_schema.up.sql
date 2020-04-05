@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS transactions (
-    identifier      SERIAL         UNIQUE PRIMARY KEY,
+    id              SERIAL         UNIQUE PRIMARY KEY,
     name            VARCHAR        NOT NULL,
-    animal          VARCHAR        NOT NULL
+    tag             VARCHAR        NULL
 );
