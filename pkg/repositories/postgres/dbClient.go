@@ -9,6 +9,7 @@ import (
 )
 
 type DBClient interface {
+	Exec(query string, args ...interface{}) (sql.Result, error)
 	Ping() error
 	DB() *sql.DB
 }
@@ -35,6 +36,10 @@ func NewDBClient() DBClient {
 	db.SetMaxIdleConns(5)
 
 	return &dbClient{db: db}
+}
+
+func (dbc *dbClient) Exec(query string, args ...interface{}) (sql.Result, error) {
+	return dbc.db.Exec(query, args...)
 }
 
 func (dbc *dbClient) Ping() error {

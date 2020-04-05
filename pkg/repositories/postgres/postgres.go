@@ -15,4 +15,5 @@ func NewPostgres(client DBClient) *postgres {
 
 func (p *postgres) CreatePet(ctx context.Context, pet models.Pet) models.PetError {
 
+	return nil
 }
