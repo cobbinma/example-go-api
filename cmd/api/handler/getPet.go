@@ -43,5 +43,11 @@ func getID(c echo.Context) (int, models.PetError) {
 		return 0, pErr
 	}
 
+	if id < 1 {
+		pErr := models.NewPetError(err, "id must be greater than 0", 0)
+		pErr.Wrap(fmt.Sprintf("invalid pet id '%s'", idStr))
+		return 0, pErr
+	}
+
 	return id, nil
 }

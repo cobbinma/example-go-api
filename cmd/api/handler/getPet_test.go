@@ -87,4 +87,36 @@ var _ = Describe("GetPet", func() {
 			})
 		})
 	})
+	Context("with no id param", func() {
+		It("should return a 400 bad request", func() {
+			e := echo.New()
+			req := httptest.NewRequest(http.MethodGet, "/", nil)
+			rec := httptest.NewRecorder()
+			c := e.NewContext(req, rec)
+
+			h := handler.NewHandler(repository)
+
+			err := h.GetPet(c)
+			Expect(rec.Code).To(Equal(http.StatusBadRequest))
+			Expect(err).To(BeNil())
+		})
+	})
+
+	Context("with invalid id param", func() {
+		It("should return a 400 bad request", func() {
+			e := echo.New()
+			req := httptest.NewRequest(http.MethodGet, "/", nil)
+			rec := httptest.NewRecorder()
+			c := e.NewContext(req, rec)
+			c.SetPath("/pet/:id")
+			c.SetParamNames("id")
+			c.SetParamValues("0")
+
+			h := handler.NewHandler(repository)
+
+			err := h.GetPet(c)
+			Expect(rec.Code).To(Equal(http.StatusBadRequest))
+			Expect(err).To(BeNil())
+		})
+	})
 })
