@@ -24,7 +24,7 @@ func (pe *postgresError) Wrap(s string) {
 	pe.err = fmt.Errorf("%s : %w", s, pe.err)
 }
 
-func (pe *postgresError) UnWrap() error {
+func (pe *postgresError) Unwrap() error {
 	return pe.err
 }
 
