@@ -16,7 +16,7 @@ func (h *handler) GetPet(c echo.Context) error {
 	id, pErr := getID(c)
 	if pErr != nil {
 		pErr.Wrap("could not get id")
-		return c.JSON(http.StatusInternalServerError, models.NewErrorResponse(pErr))
+		return c.JSON(http.StatusBadRequest, models.NewErrorResponse(pErr))
 	}
 
 	pets, pErr := h.repository.GetPet(ctx, id)
@@ -24,13 +24,12 @@ func (h *handler) GetPet(c echo.Context) error {
 		if errors.Is(pErr, sql.ErrNoRows) {
 			pErr.Wrap("could not find pet in repository")
 			logrus.Info(pErr)
-			return c.JSON(http.StatusInternalServerError, models.NewErrorResponse(pErr))
+			return c.JSON(http.StatusBadRequest, models.NewErrorResponse(pErr))
 		}
 		pErr.Wrap("error getting pet")
 		logrus.Error(pErr)
 		return c.JSON(http.StatusInternalServerError, models.NewErrorResponse(pErr))
 	}
-
 	return c.JSON(http.StatusOK, pets)
 }
 
