@@ -22,9 +22,14 @@ func NewPet(id int, name string, tag string) *Pet {
 func NewPetFromRequest(req []byte) (*Pet, PetError) {
 	pet := Pet{}
 	if err := json.Unmarshal(req, &pet); err != nil {
-		pe := NewPetError(err, "request is not valid", 0)
-		pe.Wrap("could not unmarshal request into Pet")
-		return nil, pe
+		pErr := NewPetError(err, "request is not valid", 0)
+		pErr.Wrap("could not unmarshal request into Pet")
+		return nil, pErr
+	}
+	if err := pet.validate(); err != nil {
+		pErr := NewPetError(err, "could not validate request", 0)
+		pErr.Wrap("could not validate request")
+		return nil, pErr
 	}
 	return &pet, nil
 }
