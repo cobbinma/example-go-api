@@ -16,6 +16,14 @@ type petError struct {
 	message string
 }
 
+func newPetError(err error, message string, code int) PetError {
+	return &petError{
+		err:     err,
+		code:    code,
+		message: message,
+	}
+}
+
 func (pe *petError) Error() string {
 	return pe.err.Error()
 }

@@ -3,7 +3,7 @@ package postgres
 type pet struct {
 	ID   int    `db:"id"`
 	Name string `db:"name"`
-	Tag  string `db:"animal"`
+	Tag  string `db:"tag,omitempty"`
 }
 
 func (p *pet) GetID() int {

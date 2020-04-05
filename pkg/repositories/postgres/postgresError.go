@@ -8,6 +8,14 @@ type postgresError struct {
 	message string
 }
 
+func newPetError(err error, message string, code int) *postgresError {
+	return &postgresError{
+		err:     err,
+		code:    code,
+		message: message,
+	}
+}
+
 func (pe *postgresError) Error() string {
 	return pe.err.Error()
 }
