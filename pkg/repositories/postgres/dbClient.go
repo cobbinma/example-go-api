@@ -10,6 +10,7 @@ import (
 
 type DBClient interface {
 	Exec(query string, args ...interface{}) (sql.Result, error)
+	GetPet(query string, args ...interface{}) (*dbPet, error)
 	GetPets(query string, args ...interface{}) (dbPets, error)
 	Ping() error
 	DB() *sql.DB
@@ -49,6 +50,14 @@ func (dbc *dbClient) GetPets(query string, args ...interface{}) (dbPets, error) 
 		return nil, err
 	}
 	return pets, nil
+}
+
+func (dbc *dbClient) GetPet(query string, args ...interface{}) (*dbPet, error) {
+	pet := dbPet{}
+	if err := dbc.db.Get(&pet, query, args...); err != nil {
+		return nil, err
+	}
+	return &pet, nil
 }
 
 func (dbc *dbClient) Ping() error {

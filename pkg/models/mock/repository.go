@@ -62,3 +62,18 @@ func (mr *MockRepositoryMockRecorder) GetPets(ctx, limit, page interface{}) *gom
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPets", reflect.TypeOf((*MockRepository)(nil).GetPets), ctx, limit, page)
 }
+
+// GetPet mocks base method
+func (m *MockRepository) GetPet(ctx context.Context, id int) (*models.Pet, models.PetError) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetPet", ctx, id)
+	ret0, _ := ret[0].(*models.Pet)
+	ret1, _ := ret[1].(models.PetError)
+	return ret0, ret1
+}
+
+// GetPet indicates an expected call of GetPet
+func (mr *MockRepositoryMockRecorder) GetPet(ctx, id interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPet", reflect.TypeOf((*MockRepository)(nil).GetPet), ctx, id)
+}
