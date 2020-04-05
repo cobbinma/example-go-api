@@ -1,7 +1,11 @@
 package handler
 
-type handler struct{}
+import "github.com/cobbinma/example-go-api/pkg/models"
 
-func NewHandler() *handler {
-	return &handler{}
+type handler struct {
+	repository models.Repository
+}
+
+func NewHandler(repo models.Repository) *handler {
+	return &handler{repository: repo}
 }
