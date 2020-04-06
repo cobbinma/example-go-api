@@ -1,4 +1,4 @@
-# Example Go API Readme
+# Example Go REST API Readme
 
 ## Dev Environment
 
