@@ -3,8 +3,8 @@ package handler_test
 import (
 	"context"
 	"github.com/cobbinma/example-go-api/cmd/api/handler"
-	"github.com/cobbinma/example-go-api/pkg/models"
-	mockModels "github.com/cobbinma/example-go-api/pkg/models/mock"
+	"github.com/cobbinma/example-go-api/models"
+	mockModels "github.com/cobbinma/example-go-api/models/mock"
 	"github.com/golang/mock/gomock"
 	"github.com/labstack/echo/v4"
 	. "github.com/onsi/ginkgo"

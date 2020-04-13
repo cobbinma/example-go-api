@@ -2,9 +2,9 @@ package main
 
 import (
 	"github.com/cobbinma/example-go-api/cmd/api/handler"
-	"github.com/cobbinma/example-go-api/pkg/config"
-	"github.com/cobbinma/example-go-api/pkg/models"
-	"github.com/cobbinma/example-go-api/pkg/repositories/postgres"
+	"github.com/cobbinma/example-go-api/config"
+	"github.com/cobbinma/example-go-api/models"
+	"github.com/cobbinma/example-go-api/repositories/postgres"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/sirupsen/logrus"

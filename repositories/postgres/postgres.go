@@ -3,7 +3,7 @@ package postgres
 import (
 	"context"
 	sq "github.com/Masterminds/squirrel"
-	"github.com/cobbinma/example-go-api/pkg/models"
+	"github.com/cobbinma/example-go-api/models"
 )
 
 type postgres struct {

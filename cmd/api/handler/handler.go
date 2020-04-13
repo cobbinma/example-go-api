@@ -1,6 +1,6 @@
 package handler
 
-import "github.com/cobbinma/example-go-api/pkg/models"
+import "github.com/cobbinma/example-go-api/models"
 
 type handler struct {
 	repository models.Repository
