@@ -19,7 +19,8 @@ RUN --mount=type=cache,target=/var/cache/apk apk add --update \
   ;
 
 COPY --from=builder /main /
-COPY --from=builder /src/files /files
+COPY --from=builder /src/api /api
+COPY --from=builder /src/migrations /migrations
 
 EXPOSE 8989
 ENTRYPOINT ["/sbin/tini", "--"]
