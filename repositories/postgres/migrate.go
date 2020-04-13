@@ -15,7 +15,7 @@ func (p *postgres) Migrate() error {
 	}
 
 	m, err := migrate.NewWithDatabaseInstance(
-		"file://files/migrations",
+		"file://migrations",
 		"postgres", driver)
 	if err != nil {
 		return fmt.Errorf("error instantiating migrate : %w", err)

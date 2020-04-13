@@ -3,7 +3,7 @@ package postgres
 import (
 	"database/sql"
 	"fmt"
-	"github.com/cobbinma/example-go-api/pkg/config"
+	"github.com/cobbinma/example-go-api/config"
 	"github.com/jmoiron/sqlx"
 	"github.com/sirupsen/logrus"
 )
