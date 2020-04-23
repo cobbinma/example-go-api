@@ -5,6 +5,4 @@ dist: trusty
 sudo: false
 install: true
 script:
-  - env GO111MODULE=on go test -v ./...
-after_success:
   - sh .travis/deploy.sh
