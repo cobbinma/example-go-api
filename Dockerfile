@@ -13,7 +13,7 @@ RUN --mount=type=cache,target=/go/pkg/mod,sharing=locked \
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 FROM alpine:3.8 as release
 
-RUN --mount=type=cache,target=/var/cache/apk apk add --update \
+RUN --target=/var/cache/apk apk add --update \
   curl \
   tini \
   ;
