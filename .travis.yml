@@ -5,5 +5,6 @@ dist: trusty
 sudo: false
 install: true
 script:
-  - env GO111MODULE=on go build -a -o /main cmd/api/main.go
   - env GO111MODULE=on go test -v ./...
+after_success:
+  - sh .travis/deploy_dockerhub.sh
