@@ -6,7 +6,7 @@ WORKDIR /src
 
 COPY . .
 
-RUN --mount=type=cache,target=/go/pkg/mod,sharing=locked \
+RUN target=/go/pkg/mod,sharing=locked \
     go test ./... \
     && CGO_ENABLED=0 go build -a -o /main cmd/api/main.go
 
