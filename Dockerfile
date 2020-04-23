@@ -6,17 +6,11 @@ WORKDIR /src
 
 COPY . .
 
-RUN target=/go/pkg/mod,sharing=locked \
-    go test ./... \
+RUN go test ./... \
     && CGO_ENABLED=0 go build -a -o /main cmd/api/main.go
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 FROM alpine:3.8 as release
-
-RUN --target=/var/cache/apk apk add --update \
-  curl \
-  tini \
-  ;
 
 COPY --from=builder /main /
 COPY --from=builder /src/api /api
