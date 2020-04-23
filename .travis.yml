@@ -1,13 +1,13 @@
-sudo: required
-
-services:
-  - docker
-
 language: go
-
+go:
+  - 1.14.x
+  - master
+os:
+  - linux
+  - osx
+dist: trusty
+sudo: false
+install: true
 script:
-  - make ci service=${TRAVIS_REPO_SLUG} tag=${BUILDKITE_COMMIT}
-
-notifications:
-  email:
-    on_success: never
+  - env GO111MODULE=on go build
+  - env GO111MODULE=on go test ./...

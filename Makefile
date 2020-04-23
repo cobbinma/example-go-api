@@ -2,24 +2,6 @@ tag := latest
 server_in := cmd/api/main.go
 server_out := main
 
-.PHONY: default
-default: docker
-
-.PHONY: ci
-ci: docker push ## Build in CI
-
-.PHONY: docker
-docker: ## Build Docker image
-
-	docker build \
-		--tag $(service):latest \
-		--tag $(service):$(tag) \
-
-.PHONY: push
-push: ## Push images to registry
-	docker push $(service):latest
-	docker push $(service):$(tag)
-
 .PHONY: server
 server: dep ## Compile server for local OS
 	go build -i -v -o $(server_out) $(server_in)
