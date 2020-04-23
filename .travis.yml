@@ -5,4 +5,4 @@ dist: trusty
 sudo: false
 install: true
 script:
-  - sh .travis/deploy.sh
+  - sh .travis/docker.sh
