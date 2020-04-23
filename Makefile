@@ -1,11 +1,21 @@
-app := go-example-api
 tag := latest
 server_in := cmd/api/main.go
 server_out := main
 
 .PHONY: default
-default:
-		docker build -f Dockerfile.dev -t dev_docker .
+default: docker
+
+.PHONY: docker push
+docker: ## Build Docker image
+
+	docker build --progress=plain \
+		--tag $(service):latest \
+		--tag $(service):$(tag) \
+
+.PHONY: push
+push: ## Push images to registry
+	docker push $(service):latest
+	docker push $(service):$(tag)
 
 .PHONY: server
 server: dep ## Compile server for local OS

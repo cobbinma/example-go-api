@@ -6,10 +6,7 @@ services:
 language: go
 
 script:
-  - go test -v ./...
-
-after_success:
-  - sh .travis/deploy_dockerhub.sh
+  - make ci service=${TRAVIS_REPO_SLUG} tag=${BUILDKITE_COMMIT}
 
 notifications:
   email:
