@@ -1,1 +1,16 @@
+sudo: required
+
+services:
+  - docker
+
 language: go
+
+script:
+  - go test -v ./...
+
+after_success:
+  - sh .travis/deploy_dockerhub.sh
+
+notifications:
+  email:
+    on_success: never
