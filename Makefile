@@ -5,7 +5,10 @@ server_out := main
 .PHONY: default
 default: docker
 
-.PHONY: docker push
+.PHONY: ci
+ci: docker push ## Build in CI
+
+.PHONY: docker
 docker: ## Build Docker image
 
 	docker build --progress=plain \
