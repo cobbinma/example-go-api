@@ -11,7 +11,7 @@ ci: docker push ## Build in CI
 .PHONY: docker
 docker: ## Build Docker image
 
-	docker build --progress=plain \
+	docker build \
 		--tag $(service):latest \
 		--tag $(service):$(tag) \
 
