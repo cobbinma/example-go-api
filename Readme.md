@@ -1,5 +1,9 @@
 # Example Go REST API Readme
 
+## Heroku
+
+https://rocky-reef-74316.herokuapp.com/healthz
+
 ## Dev Environment
 
 #### To Run
