@@ -5,7 +5,7 @@ dist: trusty
 sudo: false
 install: true
 script:
-- sh .travis/docker.sh
+- go test -v ./...
 deploy:
   provider: heroku
   api_key:
