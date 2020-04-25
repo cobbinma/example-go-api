@@ -2,7 +2,7 @@
 
 ## Heroku
 
-https://rocky-reef-74316.herokuapp.com/healthz
+https://example-go-api.herokuapp.com/healthz
 
 ## Dev Environment
 
