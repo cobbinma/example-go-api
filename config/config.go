@@ -9,7 +9,7 @@ const (
 )
 
 func GetPort() string {
-	p := os.Getenv("HTTP_PORT")
+	p := os.Getenv("PORT")
 	if p != "" {
 		return p
 	}

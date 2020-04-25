@@ -1,11 +1,6 @@
-app := go-example-api
 tag := latest
 server_in := cmd/api/main.go
 server_out := main
-
-.PHONY: default
-default:
-		docker build -f Dockerfile.dev -t dev_docker .
 
 .PHONY: server
 server: dep ## Compile server for local OS

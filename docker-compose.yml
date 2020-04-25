@@ -13,6 +13,7 @@ services:
       - DB_PASSWORD=example
       - DB_DBNAME=example
       - DB_USER=example
+      - DB_SSLMODE=disable
     depends_on:
       - db
     networks:

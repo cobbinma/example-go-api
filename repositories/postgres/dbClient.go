@@ -21,11 +21,12 @@ type dbClient struct {
 }
 
 func NewDBClient() DBClient {
-	dsn := fmt.Sprintf("host=%s dbname=%s user=%s password=%s sslmode=disable",
+	dsn := fmt.Sprintf("host=%s dbname=%s user=%s password=%s sslmode=%s",
 		config.DBHost,
 		config.DBName,
 		config.DBUser,
-		config.DBPassword)
+		config.DBPassword,
+		config.DBSSLMode)
 
 	driver := "postgres"
 
