@@ -1,9 +1,13 @@
 language: go
 go:
-  - 1.14.x
+- 1.14.x
 dist: trusty
 sudo: false
 install: true
 script:
-  - sh .travis/docker.sh
-  - sh .travis/heroku.sh
+- sh .travis/docker.sh
+deploy:
+  provider: heroku
+  api_key:
+    secure: gKuLwIJTvyBoVNXA2veBq8uIGJfm/NTFV+5BTCUSYdwJlsejJl0jKoSQpRS8ioe4+QJ5ENXYNtxfVVikWv8xXtiLJokOXrww8vsv47IczotoD9T4GvIlHeFKirqslVEBHs1DjRtsuULvly6plx35mOi2rWrxtUE9LcX1LxzSuZGHmEjY3MrFEi5uwAR3iVfjadmtcmrMJJ6B0GcTj50X2x41TeFxWShoo8QSg+XOlI3xPURixeKPwJp4WF1qdD4PIfJe1v1hWM8kQl560LvcB4qubz/jE3jybjQW4Q4umydK+APOy/H+xMi7mGWlS9f86fp1NwKQrXsLOVPWLlpFxStNdehAeD1B9TXZlXIt37E+Q/OI+Kcj3hYkfx/Z+ZTVu+A9XiUizcFWumbsPhpuek7ziSImPtI1H1C5orE/90i+aquIs1zu4Nzqu3hP+eKh0JWMSJ+9SWqu/+w23UqpIhyxIsiQDBwH47O5i0S8zSBKo94ZogNOaUjkrCoayMFYu2ihHo+7HjaAyvLLMJKYKwVdGImoxbJzbVPlbhmdggBBiuxqziPI1BcUA0mma25BRKKWJMGDYDIOD0bw7BnnW2sE1OMfYsxchINLAT2GxwhBm7sewYCFG9R5E6Y8yjb4d1lZR6I7nkqk0JIsQbqxlIduSh8OQLlZIFeK5W5m8j4=
+    app: web
