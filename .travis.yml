@@ -6,5 +6,4 @@ sudo: false
 install: true
 script:
   - sh .travis/docker.sh
-after_success:
-  - test "$TRAVIS_BRANCH" = "master" && sh .travis/heroku.sh
+  - sh .travis/heroku.sh
