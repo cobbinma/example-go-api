@@ -6,7 +6,8 @@ WORKDIR /src
 
 COPY . .
 
-RUN go test ./... \
+RUN target=/go/pkg/mod,sharing=locked \
+    go test ./... \
     && CGO_ENABLED=0 go build -a -o /main cmd/api/main.go
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -17,5 +18,4 @@ COPY --from=builder /src/api /api
 COPY --from=builder /src/migrations /migrations
 
 EXPOSE 8989
-ENTRYPOINT ["/sbin/tini", "--"]
 CMD ["/main"]
