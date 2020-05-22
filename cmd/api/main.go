@@ -13,7 +13,8 @@ import (
 func main() {
 	p := config.GetPort()
 
-	dbClient := postgres.NewDBClient()
+	dbClient, closeDB := postgres.NewDBClient()
+	defer closeDB()
 
 	repository := postgres.NewPostgres(dbClient)
 	err := repository.Migrate()
