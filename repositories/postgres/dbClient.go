@@ -20,7 +20,7 @@ type dbClient struct {
 	db *sqlx.DB
 }
 
-func NewDBClient() DBClient {
+func NewDBClient() (*dbClient, func() error) {
 	dsn := fmt.Sprintf("host=%s dbname=%s user=%s password=%s sslmode=%s",
 		config.DBHost,
 		config.DBName,
@@ -38,7 +38,9 @@ func NewDBClient() DBClient {
 	db.SetMaxOpenConns(5)
 	db.SetMaxIdleConns(5)
 
-	return &dbClient{db: db}
+	dbc := &dbClient{db: db}
+
+	return dbc, dbc.Close
 }
 
 func (dbc *dbClient) Exec(query string, args ...interface{}) (sql.Result, error) {
@@ -67,4 +69,8 @@ func (dbc *dbClient) Ping() error {
 
 func (dbc *dbClient) DB() *sql.DB {
 	return dbc.db.DB
+}
+
+func (dbc *dbClient) Close() error {
+	return dbc.DB().Close()
 }
