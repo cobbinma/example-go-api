@@ -13,12 +13,18 @@ import (
 func main() {
 	p := config.GetPort()
 
-	dbClient, closeDB := postgres.NewDBClient()
-	defer closeDB()
+	dbClient, closeDB, err := postgres.NewDBClient()
+	if err != nil {
+		logrus.Fatalf("could not create database client : %v", err)
+	}
+	defer func() {
+		if err := closeDB(); err != nil {
+			logrus.Errorf("could not close database : %v", err)
+		}
+	}()
 
 	repository := postgres.NewPostgres(dbClient)
-	err := repository.Migrate()
-	if err != nil {
+	if err := repository.Migrate(); err != nil {
 		logrus.Fatalf("could not migrate : %v", err)
 	}
 

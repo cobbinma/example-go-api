@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"github.com/cobbinma/example-go-api/config"
 	"github.com/jmoiron/sqlx"
-	"github.com/sirupsen/logrus"
 )
 
 type DBClient interface {
@@ -20,7 +19,7 @@ type dbClient struct {
 	db *sqlx.DB
 }
 
-func NewDBClient() (*dbClient, func() error) {
+func NewDBClient() (*dbClient, func() error, error) {
 	dsn := fmt.Sprintf("host=%s dbname=%s user=%s password=%s sslmode=%s",
 		config.DBHost,
 		config.DBName,
@@ -32,7 +31,7 @@ func NewDBClient() (*dbClient, func() error) {
 
 	db, err := sqlx.Open(driver, dsn)
 	if err != nil {
-		logrus.Fatalln("Could not open database: ", err)
+		return nil, nil, fmt.Errorf("could not open database : %w", err)
 	}
 
 	db.SetMaxOpenConns(5)
@@ -40,7 +39,7 @@ func NewDBClient() (*dbClient, func() error) {
 
 	dbc := &dbClient{db: db}
 
-	return dbc, dbc.Close
+	return dbc, dbc.Close, nil
 }
 
 func (dbc *dbClient) Exec(query string, args ...interface{}) (sql.Result, error) {
