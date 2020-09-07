@@ -44,9 +44,9 @@ var _ = Describe("CreatePet", func() {
 				rec := httptest.NewRecorder()
 
 				c := e.NewContext(req, rec)
-				h := handler.NewHandler(repository)
+				h := handler.CreatePet(repository)
 
-				err := h.CreatePet(c)
+				err := h(c)
 				Expect(rec.Code).To(Equal(http.StatusCreated))
 				Expect(err).To(BeNil())
 			})
@@ -66,9 +66,9 @@ var _ = Describe("CreatePet", func() {
 				rec := httptest.NewRecorder()
 
 				c := e.NewContext(req, rec)
-				h := handler.NewHandler(repository)
+				h := handler.CreatePet(repository)
 
-				err := h.CreatePet(c)
+				err := h(c)
 				Expect(rec.Code).To(Equal(http.StatusCreated))
 				Expect(err).To(BeNil())
 			})
@@ -84,9 +84,9 @@ var _ = Describe("CreatePet", func() {
 				rec := httptest.NewRecorder()
 
 				c := e.NewContext(req, rec)
-				h := handler.NewHandler(repository)
+				h := handler.CreatePet(repository)
 
-				err := h.CreatePet(c)
+				err := h(c)
 				Expect(rec.Code).To(Equal(http.StatusBadRequest))
 				Expect(err).To(BeNil())
 			})
@@ -100,9 +100,9 @@ var _ = Describe("CreatePet", func() {
 				rec := httptest.NewRecorder()
 
 				c := e.NewContext(req, rec)
-				h := handler.NewHandler(repository)
+				h := handler.CreatePet(repository)
 
-				err := h.CreatePet(c)
+				err := h(c)
 				Expect(rec.Code).To(Equal(http.StatusBadRequest))
 				Expect(err).To(BeNil())
 			})
@@ -113,9 +113,9 @@ var _ = Describe("CreatePet", func() {
 				rec := httptest.NewRecorder()
 
 				c := e.NewContext(req, rec)
-				h := handler.NewHandler(repository)
+				h := handler.CreatePet(repository)
 
-				err := h.CreatePet(c)
+				err := h(c)
 				Expect(rec.Code).To(Equal(http.StatusBadRequest))
 				Expect(err).To(BeNil())
 			})

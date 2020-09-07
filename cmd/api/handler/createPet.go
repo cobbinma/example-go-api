@@ -8,30 +8,32 @@ import (
 	"net/http"
 )
 
-func (h *handler) CreatePet(c echo.Context) error {
-	ctx := c.Request().Context()
+func CreatePet(repository models.Repository) func(c echo.Context) error {
+	return func(c echo.Context) error {
+		ctx := c.Request().Context()
 
-	reqBody, err := ioutil.ReadAll(c.Request().Body)
-	if err != nil {
-		pErr := models.NewPetError(err, "could not read request", 0)
-		pErr.Wrap("error reading request body")
-		logrus.Info(pErr)
-		return c.JSON(http.StatusBadRequest, models.NewErrorResponse(pErr))
+		reqBody, err := ioutil.ReadAll(c.Request().Body)
+		if err != nil {
+			pErr := models.NewPetError(err, "could not read request", 0)
+			pErr.Wrap("error reading request body")
+			logrus.Info(pErr)
+			return c.JSON(http.StatusBadRequest, models.NewErrorResponse(pErr))
+		}
+
+		pet, pErr := models.NewPetFromRequest(reqBody)
+		if pErr != nil {
+			pErr.Wrap("error creating pet from request")
+			logrus.Info(pErr)
+			return c.JSON(http.StatusBadRequest, models.NewErrorResponse(pErr))
+		}
+
+		pErr = repository.CreatePet(ctx, pet)
+		if pErr != nil {
+			pErr.Wrap("error storing pet")
+			logrus.Error(pErr)
+			return c.JSON(http.StatusInternalServerError, models.NewErrorResponse(pErr))
+		}
+
+		return c.NoContent(http.StatusCreated)
 	}
-
-	pet, pErr := models.NewPetFromRequest(reqBody)
-	if pErr != nil {
-		pErr.Wrap("error creating pet from request")
-		logrus.Info(pErr)
-		return c.JSON(http.StatusBadRequest, models.NewErrorResponse(pErr))
-	}
-
-	pErr = h.repository.CreatePet(ctx, pet)
-	if pErr != nil {
-		pErr.Wrap("error storing pet")
-		logrus.Error(pErr)
-		return c.JSON(http.StatusInternalServerError, models.NewErrorResponse(pErr))
-	}
-
-	return c.NoContent(http.StatusCreated)
 }
