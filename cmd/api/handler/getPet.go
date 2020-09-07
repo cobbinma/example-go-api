@@ -11,27 +11,29 @@ import (
 	"strconv"
 )
 
-func (h *handler) GetPet(c echo.Context) error {
-	ctx := c.Request().Context()
+func GetPet(repository models.Repository) func(c echo.Context) error {
+	return func(c echo.Context) error {
+		ctx := c.Request().Context()
 
-	id, pErr := getID(c)
-	if pErr != nil {
-		pErr.Wrap("could not get id")
-		return c.JSON(http.StatusBadRequest, models.NewErrorResponse(pErr))
-	}
-
-	pet, pErr := h.repository.GetPet(ctx, id)
-	if pErr != nil {
-		if errors.Is(pErr, sql.ErrNoRows) {
-			pErr.Wrap("could not find pet in repository")
-			logrus.Info(pErr)
-			return c.JSON(http.StatusNotFound, models.NewErrorResponse(pErr))
+		id, pErr := getID(c)
+		if pErr != nil {
+			pErr.Wrap("could not get id")
+			return c.JSON(http.StatusBadRequest, models.NewErrorResponse(pErr))
 		}
-		pErr.Wrap("error getting pet")
-		logrus.Error(pErr)
-		return c.JSON(http.StatusInternalServerError, models.NewErrorResponse(pErr))
+
+		pet, pErr := repository.GetPet(ctx, id)
+		if pErr != nil {
+			if errors.Is(pErr, sql.ErrNoRows) {
+				pErr.Wrap("could not find pet in repository")
+				logrus.Info(pErr)
+				return c.JSON(http.StatusNotFound, models.NewErrorResponse(pErr))
+			}
+			pErr.Wrap("error getting pet")
+			logrus.Error(pErr)
+			return c.JSON(http.StatusInternalServerError, models.NewErrorResponse(pErr))
+		}
+		return c.JSON(http.StatusOK, pet)
 	}
-	return c.JSON(http.StatusOK, pet)
 }
 
 func getID(c echo.Context) (int, models.PetError) {

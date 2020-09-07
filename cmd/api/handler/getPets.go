@@ -8,21 +8,23 @@ import (
 	"strconv"
 )
 
-func (h *handler) GetPets(c echo.Context) error {
-	ctx := c.Request().Context()
+func GetPets(repository models.Repository) func(c echo.Context) error {
+	return func(c echo.Context) error {
+		ctx := c.Request().Context()
 
-	limit := getLimit(c)
+		limit := getLimit(c)
 
-	page := 0
+		page := 0
 
-	pets, pErr := h.repository.GetPets(ctx, limit, page)
-	if pErr != nil {
-		pErr.Wrap("error getting pets")
-		logrus.Error(pErr)
-		return c.JSON(http.StatusInternalServerError, models.NewErrorResponse(pErr))
+		pets, pErr := repository.GetPets(ctx, limit, page)
+		if pErr != nil {
+			pErr.Wrap("error getting pets")
+			logrus.Error(pErr)
+			return c.JSON(http.StatusInternalServerError, models.NewErrorResponse(pErr))
+		}
+
+		return c.JSON(http.StatusOK, pets)
 	}
-
-	return c.JSON(http.StatusOK, pets)
 }
 
 func getLimit(c echo.Context) int {

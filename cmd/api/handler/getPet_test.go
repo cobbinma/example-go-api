@@ -44,9 +44,9 @@ var _ = Describe("GetPet", func() {
 				c.SetParamNames("id")
 				c.SetParamValues("1")
 
-				h := handler.NewHandler(repository)
+				h := handler.GetPet(repository)
 
-				err := h.GetPet(c)
+				err := h(c)
 				Expect(rec.Code).To(Equal(http.StatusOK))
 				Expect(err).To(BeNil())
 			})
@@ -59,9 +59,9 @@ var _ = Describe("GetPet", func() {
 				c.SetParamNames("id")
 				c.SetParamValues("1")
 
-				h := handler.NewHandler(repository)
+				h := handler.GetPet(repository)
 
-				err := h.GetPet(c)
+				err := h(c)
 				Expect(rec.Body.String()).To(Equal(expected))
 				Expect(err).To(BeNil())
 			})
@@ -79,9 +79,9 @@ var _ = Describe("GetPet", func() {
 				c.SetParamNames("id")
 				c.SetParamValues("1")
 
-				h := handler.NewHandler(repository)
+				h := handler.GetPet(repository)
 
-				err := h.GetPet(c)
+				err := h(c)
 				Expect(rec.Code).To(Equal(http.StatusInternalServerError))
 				Expect(err).To(BeNil())
 			})
@@ -94,9 +94,9 @@ var _ = Describe("GetPet", func() {
 			rec := httptest.NewRecorder()
 			c := e.NewContext(req, rec)
 
-			h := handler.NewHandler(repository)
+			h := handler.GetPet(repository)
 
-			err := h.GetPet(c)
+			err := h(c)
 			Expect(rec.Code).To(Equal(http.StatusBadRequest))
 			Expect(err).To(BeNil())
 		})
@@ -112,9 +112,9 @@ var _ = Describe("GetPet", func() {
 			c.SetParamNames("id")
 			c.SetParamValues("0")
 
-			h := handler.NewHandler(repository)
+			h := handler.GetPet(repository)
 
-			err := h.GetPet(c)
+			err := h(c)
 			Expect(rec.Code).To(Equal(http.StatusBadRequest))
 			Expect(err).To(BeNil())
 		})

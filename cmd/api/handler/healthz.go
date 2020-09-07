@@ -5,6 +5,8 @@ import (
 	"net/http"
 )
 
-func (h *handler) Health(c echo.Context) error {
-	return c.NoContent(http.StatusOK)
+func Health() func(c echo.Context) error {
+	return func(c echo.Context) error {
+		return c.NoContent(http.StatusOK)
+	}
 }

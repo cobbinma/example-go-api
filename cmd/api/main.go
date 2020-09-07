@@ -35,15 +35,14 @@ func main() {
 
 func getRouter(repository models.Repository) *echo.Echo {
 	e := echo.New()
-	h := handler.NewHandler(repository)
 
 	e.Use(middleware.Logger())
 
-	e.GET("/healthz", h.Health)
-	e.GET("/oas", h.Oas)
-	e.POST("/pets", h.CreatePet)
-	e.GET("/pets", h.GetPets)
-	e.GET("/pet/:id", h.GetPet)
+	e.GET("/healthz", handler.Health())
+	e.GET("/oas", handler.Oas())
+	e.POST("/pets", handler.GetPets(repository))
+	e.GET("/pets", handler.GetPets(repository))
+	e.GET("/pet/:id", handler.GetPet(repository))
 
 	return e
 }
